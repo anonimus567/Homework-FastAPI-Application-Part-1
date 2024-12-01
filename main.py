@@ -56,7 +56,7 @@ def get_all_cve_for_last_five_days(request: Request):
             if count == 40:  
                 break
 
-    return templates.TemplateResponse("last_five_cve.html", {"request": request, "result_of_searching": result_of_searching})
+    return templates.TemplateResponse("all_cves.html", {"request": request, "result_of_searching": result_of_searching})
 
 @app.get("/get/new", response_class=HTMLResponse)
 def get_ten_latest_cve(request: Request):
@@ -74,7 +74,7 @@ def get_ten_latest_cve(request: Request):
            if count == 10:
              break
 
-        return templates.TemplateResponse("new_vulnerabilities.html", {"request": request, "newest_vulnerabilitie": newest_vulnerabilities})
+        return templates.TemplateResponse("new_cves.html", {"request": request, "newest_vulnerabilitie": newest_vulnerabilities})
 
 @app.get("/get/known")
 def get_ten_known_cve(request: Request):
@@ -96,7 +96,7 @@ def get_ten_known_cve(request: Request):
 
 
 @app.get("/get", response_class=HTMLResponse)
-def get_query(request: Request, query: str ):
+def get_results_with_query(request: Request, query: str ):
     if not re.match(r"([a-zA-Z0-9]+(\s[a-zA-Z0-9]+)?)", query):
         raise HTTPException(status_code=400, detail="Your keyphrase in url includes forbidden symbols. Please use only letters and digits.")
  
@@ -112,8 +112,6 @@ def get_query(request: Request, query: str ):
         if pattern.search(description):
              result_of_searching.append(vuln)
 
-    return templates.TemplateResponse("search_results.html",{"request": request, "query": query, "result_of_searching": result_of_searching})
-
-
+    return templates.TemplateResponse("search_for_query.html",{"request": request, "query": query, "result_of_searching": result_of_searching})
     
             
