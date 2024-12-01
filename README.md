@@ -1,5 +1,5 @@
 # My code
-
+### comments for my code are in main.py
 ## Endpoint to retrieve information about aplication and creator
 ```python
 @app.get('/info', response_class=HTMLResponse)
